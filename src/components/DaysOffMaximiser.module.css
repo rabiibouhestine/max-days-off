@@ -1,0 +1,18 @@
+.maximiser-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 24px;
+  width: 1024px;
+  margin-block: 32px;
+}
+
+.inputs-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 40px;
+}

@@ -1,6 +1,16 @@
 .app {
-  max-width: 1280px;
-  margin: auto auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 2rem;
   text-align: center;
+}
+
+.app h1 {
+  text-transform: uppercase;
+  margin: 0px;
+}
+
+.app p {
+  margin: 0px;
 }
