@@ -9,6 +9,7 @@
 .app h1 {
   text-transform: uppercase;
   margin: 0px;
+  font-size: clamp(24px, 5vw, 40px);
 }
 
 .app p {
