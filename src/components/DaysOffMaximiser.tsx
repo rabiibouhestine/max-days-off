@@ -26,33 +26,21 @@ export default function DaysOffMaximiser() {
           ))}
         </select>
         and have
-        <div>
+        <div className={styles["input-controls"]}>
           <button type="button" onClick={handleDecrementNbPTO}>
             −
           </button>
-          <input
-            type="number"
-            value={nbPTO}
-            onChange={(e) => setNbPTO(Number(e.target.value))}
-          />
+          <span className={styles["input-pto"]}>{nbPTO}</span>
           <button type="button" onClick={handleIncrementNbPTO}>
             +
           </button>
         </div>
         days off in
-        <div>
+        <div className={styles["input-controls"]}>
           <button type="button" onClick={handleDecrementYear}>
             −
           </button>
-          <input
-            type="text"
-            value={year}
-            onChange={(e) => {
-              const val = parseInt(e.target.value);
-              if (!isNaN(val)) setYear(val);
-            }}
-            style={{ width: "4ch", textAlign: "center" }}
-          />
+          <span className={styles["input-year"]}>{year}</span>
           <button type="button" onClick={handleIncrementYear}>
             +
           </button>

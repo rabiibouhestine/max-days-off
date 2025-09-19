@@ -13,8 +13,53 @@
 .inputs-container {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   margin-top: 40px;
+  margin-bottom: 32px;
+}
+
+.inputs-container button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  box-shadow: none;
+  outline: none;
+}
+
+.inputs-container select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  color: #666;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 72px;
+  height: 32px;
+  cursor: pointer;
+  box-shadow: none;
+  outline: none;
+}
+
+.input-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.input-pto {
+  width: 16px;
+}
+
+.input-year {
+  width: 40px;
 }
 
 .legend-container {
