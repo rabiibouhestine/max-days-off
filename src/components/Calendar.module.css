@@ -78,6 +78,17 @@
   border: 2px solid #e57373;
   color: #c62828;
   font-weight: 700;
+  position: relative;
+}
+
+.day-holiday::after {
+  content: "★";
+  font-size: 0.6em;
+  color: rgb(198, 40, 40);
+  position: absolute;
+  top: 20%;
+  right: 0%;
+  transform: translate(-50%, -50%);
 }
 
 .day-pto {
@@ -85,6 +96,17 @@
   border: 2px solid #299669;
   color: #1a5c42;
   font-weight: 700;
+  position: relative;
+}
+
+.day-pto::after {
+  content: "✓";
+  font-size: 0.6em;
+  color: rgb(41, 150, 105);
+  position: absolute;
+  top: 20%;
+  right: 0%;
+  transform: translate(-50%, -50%);
 }
 
 .day-consecutive {
