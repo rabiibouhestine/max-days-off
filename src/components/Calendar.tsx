@@ -2,11 +2,10 @@ import type { DayInfo } from "../types";
 import styles from "./Calendar.module.css";
 
 type CalendarProps = {
-  key: number;
   daysInfo: DayInfo[];
 };
 
-export default function Calendar({ key, daysInfo }: CalendarProps) {
+export default function Calendar({ daysInfo }: CalendarProps) {
   const firstWeekDay: number = daysInfo[0].date.getDay();
   const month: string = daysInfo[0].date.toLocaleString("en-US", {
     month: "long",
@@ -47,12 +46,12 @@ export default function Calendar({ key, daysInfo }: CalendarProps) {
 
   return (
     <div className={styles["calendar-container"]}>
-      <div key={key} className={styles["calendar"]}>
+      <div className={styles["calendar"]}>
         <div className={styles["month"]}>{month}</div>
 
         <div className={styles["weekdays"]}>
-          {weekdays.map((day) => (
-            <div className={styles["weekday"]} key={day}>
+          {weekdays.map((day, index) => (
+            <div className={styles["weekday"]} key={day + index}>
               {day}
             </div>
           ))}

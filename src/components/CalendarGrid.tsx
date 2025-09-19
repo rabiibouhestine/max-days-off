@@ -1,6 +1,7 @@
 import type { DayInfo } from "../types";
 import styles from "./CalendarGrid.module.css";
 import Calendar from "./Calendar";
+import { useEffect, useState } from "react";
 
 function generateDaysOfYear(year: number): DayInfo[] {
   const days: DayInfo[] = [];
@@ -26,9 +27,26 @@ function generateDaysOfYear(year: number): DayInfo[] {
   return days;
 }
 
-export default function CalendarGrid() {
+type CalendarGridProps = {
+  country: string;
+  year: number;
+  nbPTO: number;
+};
+
+export default function CalendarGrid({
+  country,
+  year,
+  nbPTO,
+}: CalendarGridProps) {
   const months: number[] = Array.from({ length: 12 }, (_, i) => i + 1);
   const daysInfo: DayInfo[] = generateDaysOfYear(2025);
+  const [holidays, setHolidays] = useState([]);
+
+  useEffect(() => {
+    setHolidays(() => []);
+    console.log("set holidays");
+  }, [country, year]);
+
   return (
     <div className={styles["calendar-grid"]}>
       {months.map((month) => {
