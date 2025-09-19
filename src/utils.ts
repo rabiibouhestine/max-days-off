@@ -1,0 +1,48 @@
+import type { DayInfo } from "./types";
+
+export function getHolidays(country: string, year: number) {
+  return [];
+}
+
+export function generateDaysInfo(
+  year: number,
+  holidays?: Date[],
+  nbPTO?: number
+): DayInfo[] {
+  const days: DayInfo[] = [];
+
+  const types: DayInfo["type"][] = ["regular", "holiday", "pto"];
+
+  // Start on Jan 1st
+  const current = new Date(year, 0, 1);
+
+  if (holidays == null || nbPTO == null) {
+    while (current.getFullYear() === year) {
+      // Create a new object for the current day
+      days.push({
+        date: new Date(current), // clone
+        isConsecutive: false, // ~30% chance true
+        type: "regular",
+        label: "", // arbitrary
+      });
+
+      // Increment to the next day
+      current.setDate(current.getDate() + 1);
+    }
+  } else {
+    while (current.getFullYear() === year) {
+      // Create a new object for the current day
+      days.push({
+        date: new Date(current), // clone
+        isConsecutive: Math.random() > 0.7, // ~30% chance true
+        type: types[Math.floor(Math.random() * types.length)],
+        label: `Label ${Math.floor(Math.random() * 1000)}`, // arbitrary
+      });
+
+      // Increment to the next day
+      current.setDate(current.getDate() + 1);
+    }
+  }
+
+  return days;
+}
