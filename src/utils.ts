@@ -1,12 +1,8 @@
 import type { DayInfo } from "./types";
 
-export function getHolidays(country: string, year: number) {
-  return [];
-}
-
 export function generateDaysInfo(
   year: number,
-  holidays?: Date[],
+  country?: string,
   nbPTO?: number
 ): DayInfo[] {
   const days: DayInfo[] = [];
@@ -16,7 +12,7 @@ export function generateDaysInfo(
   // Start on Jan 1st
   const current = new Date(year, 0, 1);
 
-  if (holidays == null || nbPTO == null) {
+  if (country == null || nbPTO == null) {
     while (current.getFullYear() === year) {
       // Create a new object for the current day
       days.push({

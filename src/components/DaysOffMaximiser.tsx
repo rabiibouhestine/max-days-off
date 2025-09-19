@@ -1,13 +1,19 @@
+import type { DayInfo } from "../types";
 import { useState } from "react";
 import CalendarGrid from "./CalendarGrid";
+import { generateDaysInfo } from "../utils";
 import styles from "./DaysOffMaximiser.module.css";
 
 const countries = ["Tunisia", "Poland"];
 
 export default function DaysOffMaximiser() {
-  const [country, setCountry] = useState<string>(countries[0] || "");
+  const [country, setCountry] = useState<string>(countries[0]);
   const [nbPTO, setNbPTO] = useState<number>(20);
   const [year, setYear] = useState<number>(new Date().getFullYear());
+
+  const daysInfo: DayInfo[] = generateDaysInfo(year, country, nbPTO);
+  const holidayCount = daysInfo.filter((d) => d.type === "holiday").length;
+  const consecutiveCount = daysInfo.filter((d) => d.isConsecutive).length;
 
   const handleIncrementNbPTO = () => setNbPTO((n) => n + 1);
   const handleDecrementNbPTO = () => setNbPTO((n) => n - 1);
@@ -46,8 +52,12 @@ export default function DaysOffMaximiser() {
           </button>
         </div>
       </div>
-      <p>In 🇹🇳 Tunisia, there are 12 public holidays in 2025.</p>
-      <p>Let's stretch your time off from 10 days to 37 days</p>
+      <p>
+        In 🇹🇳 Tunisia, there are {holidayCount} public holidays in {year}.
+      </p>
+      <p>
+        Let's stretch your time off from {nbPTO} days to {consecutiveCount} days
+      </p>
       <div className={styles["legend-container"]}>
         <div className={styles["legend-item"]}>
           <span className={styles["legend-weekend"]}></span>
@@ -62,7 +72,7 @@ export default function DaysOffMaximiser() {
           Public Holiday
         </div>
       </div>
-      <CalendarGrid country={country} year={year} nbPTO={nbPTO} />
+      <CalendarGrid daysInfo={daysInfo} />
     </div>
   );
 }
