@@ -1,18 +1,12 @@
+import type { DayInfo } from "../types";
 import styles from "./Calendar.module.css";
-
-type dayInfo = {
-  date: Date;
-  isConsecutive: boolean;
-  type: "regular" | "holiday" | "pto";
-  label: string;
-};
 
 type CalendarProps = {
   key: number;
-  daysInfo: dayInfo[];
+  daysInfo: DayInfo[];
 };
 
-export default function Calendar({ key }: CalendarProps) {
+export default function Calendar({ key, daysInfo }: CalendarProps) {
   const firstWeekDay: number = daysInfo[0].date.getDay();
   const month: string = daysInfo[0].date.toLocaleString("en-US", {
     month: "long",
@@ -20,7 +14,7 @@ export default function Calendar({ key }: CalendarProps) {
 
   const weekdays: string[] = ["M", "T", "W", "T", "F", "S", "S"];
 
-  function getDayClass(dayInfo: dayInfo) {
+  function getDayClass(dayInfo: DayInfo) {
     const dayClasses = [styles["day"]];
     const day = dayInfo.date.getDay();
     if (day === 0 || day === 6) {
@@ -86,72 +80,3 @@ export default function Calendar({ key }: CalendarProps) {
     </div>
   );
 }
-
-const daysInfo: dayInfo[] = [
-  {
-    date: new Date("2025-10-01"),
-    isConsecutive: false,
-    type: "regular",
-    label: "",
-  },
-  {
-    date: new Date("2025-10-02"),
-    isConsecutive: false,
-    type: "regular",
-    label: "",
-  },
-  {
-    date: new Date("2025-10-03"),
-    isConsecutive: false,
-    type: "holiday",
-    label: "",
-  },
-  {
-    date: new Date("2025-10-04"),
-    isConsecutive: false,
-    type: "pto",
-    label: "",
-  },
-  {
-    date: new Date("2025-10-05"),
-    isConsecutive: false,
-    type: "pto",
-    label: "",
-  },
-  {
-    date: new Date("2025-10-06"),
-    isConsecutive: false,
-    type: "regular",
-    label: "",
-  },
-  {
-    date: new Date("2025-10-07"),
-    isConsecutive: false,
-    type: "regular",
-    label: "",
-  },
-  {
-    date: new Date("2025-10-08"),
-    isConsecutive: false,
-    type: "regular",
-    label: "",
-  },
-  {
-    date: new Date("2025-10-09"),
-    isConsecutive: false,
-    type: "holiday",
-    label: "",
-  },
-  {
-    date: new Date("2025-10-10"),
-    isConsecutive: false,
-    type: "regular",
-    label: "",
-  },
-  {
-    date: new Date("2025-10-11"),
-    isConsecutive: false,
-    type: "regular",
-    label: "",
-  },
-];
