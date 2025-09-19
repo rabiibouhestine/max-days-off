@@ -1,10 +1,10 @@
-import CalendarGrid from "./components/CalendarGrid";
+import DaysOffMaximiser from "./components/DaysOffMaximiser";
 import styles from "./App.module.css";
 
 function App() {
   return (
     <div className={styles["app"]}>
-      <CalendarGrid country="Tunisia" year={2025} nbPTO={24} />
+      <DaysOffMaximiser />
     </div>
   );
 }
