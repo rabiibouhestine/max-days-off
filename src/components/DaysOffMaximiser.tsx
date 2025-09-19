@@ -60,6 +60,20 @@ export default function DaysOffMaximiser() {
       </div>
       <p>In 🇹🇳 Tunisia, there are 12 public holidays in 2025.</p>
       <p>Let's stretch your time off from 10 days to 37 days</p>
+      <div className={styles["legend-container"]}>
+        <div className={styles["legend-item"]}>
+          <span className={styles["legend-weekend"]}></span>
+          Weekend
+        </div>
+        <div className={styles["legend-item"]}>
+          <span className={styles["legend-day-off"]}></span>
+          Day Off
+        </div>
+        <div className={styles["legend-item"]}>
+          <span className={styles["legend-public-holiday"]}></span>
+          Public Holiday
+        </div>
+      </div>
       <CalendarGrid country={country} year={year} nbPTO={nbPTO} />
     </div>
   );
