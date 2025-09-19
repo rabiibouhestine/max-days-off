@@ -68,6 +68,29 @@
   cursor: default;
 }
 
+.day-weekend {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.day-holiday {
+  background-color: #ffcdd2;
+  border: 2px solid #e57373;
+  color: #c62828;
+  font-weight: 700;
+}
+
+.day-pto {
+  background-color: #a8e6c9;
+  border: 2px solid #299669;
+  color: #1a5c42;
+  font-weight: 700;
+}
+
+.day-consecutive {
+  border: 2px solid #299669;
+}
+
 .consecutive-days-off {
   padding: 8px;
   background-color: #f8f9fa;

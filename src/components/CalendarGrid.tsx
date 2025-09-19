@@ -7,7 +7,7 @@ export default function CalendarGrid() {
   return (
     <div className={styles["calendar-grid"]}>
       {months.map((month) => (
-        <Calendar key={month} month={month} year={2025} />
+        <Calendar key={month} daysInfo={[]} />
       ))}
     </div>
   );

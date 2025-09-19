@@ -1,39 +1,60 @@
 import styles from "./Calendar.module.css";
 
-type CalendarProps = {
-  key: number;
-  month: number;
-  year: number;
+type dayInfo = {
+  date: Date;
+  isConsecutive: boolean;
+  type: "regular" | "holiday" | "pto";
+  label: string;
 };
 
-export default function Calendar({ key, month, year }: CalendarProps) {
-  const daysInMonth: number = new Date(year, month, 0).getDate();
-  const firstWeekDay: number = new Date(
-    year + "-" + String(month).padStart(2, "0") + "-01"
-  ).getDay();
+type CalendarProps = {
+  key: number;
+  daysInfo: dayInfo[];
+};
+
+export default function Calendar({ key }: CalendarProps) {
+  const firstWeekDay: number = daysInfo[0].date.getDay();
+  const month: string = daysInfo[0].date.toLocaleString("en-US", {
+    month: "long",
+  });
 
   const weekdays: string[] = ["M", "T", "W", "T", "F", "S", "S"];
-  const days: number[] = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
-  const months: string[] = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  function getDayClass(dayInfo: dayInfo) {
+    const dayClasses = [styles["day"]];
+    const day = dayInfo.date.getDay();
+    if (day === 0 || day === 6) {
+      dayClasses.push(styles["day-weekend"]);
+    }
+    switch (dayInfo.type) {
+      case "holiday":
+        dayClasses.push(styles["day-holiday"]);
+        break;
+      case "pto":
+        dayClasses.push(styles["day-pto"]);
+        break;
+      default:
+        break;
+    }
+    if (dayInfo.isConsecutive) {
+      dayClasses.push(styles["day-consecutive"]);
+    }
+    return dayClasses.join(" ");
+  }
+
+  function getDayColStart(index: number, firstWeekDay: number) {
+    if (index != 0) return;
+    if (firstWeekDay == 0) {
+      return { gridColumnStart: 7 };
+    } else {
+      return { gridColumnStart: firstWeekDay };
+    }
+  }
 
   return (
     <div className={styles["calendar-container"]}>
       <div key={key} className={styles["calendar"]}>
-        <div className={styles["month"]}>{months[month - 1]}</div>
+        <div className={styles["month"]}>{month}</div>
 
         <div className={styles["weekdays"]}>
           {weekdays.map((day) => (
@@ -44,17 +65,13 @@ export default function Calendar({ key, month, year }: CalendarProps) {
         </div>
 
         <div className={styles["day-grid"]}>
-          {days.map((n, index) => (
+          {daysInfo.map((dayInfo, index) => (
             <div
-              key={n}
-              className={styles["day"]}
-              style={
-                index === 0
-                  ? { gridColumnStart: firstWeekDay === 0 ? 7 : firstWeekDay }
-                  : {}
-              }
+              key={dayInfo.date.toISOString()}
+              className={getDayClass(dayInfo)}
+              style={getDayColStart(index, firstWeekDay)}
             >
-              {n}
+              {dayInfo.date.getDate()}
             </div>
           ))}
         </div>
@@ -69,3 +86,72 @@ export default function Calendar({ key, month, year }: CalendarProps) {
     </div>
   );
 }
+
+const daysInfo: dayInfo[] = [
+  {
+    date: new Date("2025-10-01"),
+    isConsecutive: false,
+    type: "regular",
+    label: "",
+  },
+  {
+    date: new Date("2025-10-02"),
+    isConsecutive: false,
+    type: "regular",
+    label: "",
+  },
+  {
+    date: new Date("2025-10-03"),
+    isConsecutive: false,
+    type: "holiday",
+    label: "",
+  },
+  {
+    date: new Date("2025-10-04"),
+    isConsecutive: false,
+    type: "pto",
+    label: "",
+  },
+  {
+    date: new Date("2025-10-05"),
+    isConsecutive: false,
+    type: "pto",
+    label: "",
+  },
+  {
+    date: new Date("2025-10-06"),
+    isConsecutive: false,
+    type: "regular",
+    label: "",
+  },
+  {
+    date: new Date("2025-10-07"),
+    isConsecutive: false,
+    type: "regular",
+    label: "",
+  },
+  {
+    date: new Date("2025-10-08"),
+    isConsecutive: false,
+    type: "regular",
+    label: "",
+  },
+  {
+    date: new Date("2025-10-09"),
+    isConsecutive: false,
+    type: "holiday",
+    label: "",
+  },
+  {
+    date: new Date("2025-10-10"),
+    isConsecutive: false,
+    type: "regular",
+    label: "",
+  },
+  {
+    date: new Date("2025-10-11"),
+    isConsecutive: false,
+    type: "regular",
+    label: "",
+  },
+];
