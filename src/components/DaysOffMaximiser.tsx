@@ -8,8 +8,11 @@ import styles from "./DaysOffMaximiser.module.css";
 const hd = new Holidays();
 const countries = hd.getCountries("en");
 
+console.log(hd.getStates("TN"));
+
 export default function DaysOffMaximiser() {
   const [country, setCountry] = useState<string>("TN");
+  const [region, setRegion] = useState<string>("");
   const [nbPTO, setNbPTO] = useState<number>(20);
   const [year, setYear] = useState<number>(new Date().getFullYear());
 
@@ -33,6 +36,15 @@ export default function DaysOffMaximiser() {
             </option>
           ))}
         </select>
+        {hd.getStates(country) && (
+          <select value={region} onChange={(e) => setRegion(e.target.value)}>
+            {Object.entries(hd.getStates(country)).map(([code, name]) => (
+              <option key={code} value={code}>
+                {name}
+              </option>
+            ))}
+          </select>
+        )}
         and have
         <div className={styles["input-controls"]}>
           <button type="button" onClick={handleDecrementNbPTO}>
