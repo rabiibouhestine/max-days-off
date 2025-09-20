@@ -8,8 +8,6 @@ import styles from "./DaysOffMaximiser.module.css";
 const hd = new Holidays();
 const countries = hd.getCountries("en");
 
-console.log(hd.getStates("TN"));
-
 export default function DaysOffMaximiser() {
   const [country, setCountry] = useState<string>("TN");
   const [region, setRegion] = useState<string>("");
