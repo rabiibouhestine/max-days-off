@@ -1,4 +1,11 @@
 import type { DayInfo } from "./types";
+import Holidays from "date-holidays";
+
+export function getFlagEmoji(countryCode: string): string {
+  return countryCode
+    .toUpperCase()
+    .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
+}
 
 export function generateDaysInfo(
   year: number,

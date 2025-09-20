@@ -1,13 +1,15 @@
 import type { DayInfo } from "../types";
 import { useState } from "react";
 import CalendarGrid from "./CalendarGrid";
-import { generateDaysInfo } from "../utils";
+import { generateDaysInfo, getFlagEmoji } from "../utils";
+import Holidays from "date-holidays";
 import styles from "./DaysOffMaximiser.module.css";
 
-const countries = ["Tunisia", "Poland"];
+const hd = new Holidays();
+const countries = hd.getCountries("en");
 
 export default function DaysOffMaximiser() {
-  const [country, setCountry] = useState<string>(countries[0]);
+  const [country, setCountry] = useState<string>("TN");
   const [nbPTO, setNbPTO] = useState<number>(20);
   const [year, setYear] = useState<number>(new Date().getFullYear());
 
@@ -25,9 +27,9 @@ export default function DaysOffMaximiser() {
       <div className={styles["inputs-container"]}>
         I live in
         <select value={country} onChange={(e) => setCountry(e.target.value)}>
-          {countries.map((c) => (
-            <option key={c} value={c}>
-              {c}
+          {Object.entries(countries).map(([code, name]) => (
+            <option key={code} value={code}>
+              {name}
             </option>
           ))}
         </select>
@@ -53,7 +55,8 @@ export default function DaysOffMaximiser() {
         </div>
       </div>
       <p>
-        In 🇹🇳 {country}, there are {holidayCount} public holidays in {year}.
+        In {getFlagEmoji(country)} {countries[country]}, there are{" "}
+        {holidayCount} public holidays in {year}.
       </p>
       <p>
         Let's stretch your time off from {nbPTO} days to {consecutiveCount} days
