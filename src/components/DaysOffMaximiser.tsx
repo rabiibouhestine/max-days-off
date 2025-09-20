@@ -36,9 +36,7 @@ export default function DaysOffMaximiser() {
         </select>
         {hd.getStates(country) && (
           <select value={region} onChange={(e) => setRegion(e.target.value)}>
-            <option key={"NationWide"} value={"NationWide"}>
-              Nation Wide Holidays
-            </option>
+            <option key={"NationWide"} value={"NationWide"}></option>
             {Object.entries(hd.getStates(country)).map(([code, name]) => (
               <option key={code} value={code}>
                 {name}
