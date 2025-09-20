@@ -53,7 +53,7 @@ export default function DaysOffMaximiser() {
         </div>
       </div>
       <p>
-        In 🇹🇳 Tunisia, there are {holidayCount} public holidays in {year}.
+        In 🇹🇳 {country}, there are {holidayCount} public holidays in {year}.
       </p>
       <p>
         Let's stretch your time off from {nbPTO} days to {consecutiveCount} days
