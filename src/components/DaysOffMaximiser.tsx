@@ -1,5 +1,5 @@
 import type { DayInfo } from "../types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CalendarGrid from "./CalendarGrid";
 import { generateDaysInfo, getFlagEmoji } from "../utils";
 import Holidays from "date-holidays";
@@ -22,6 +22,22 @@ export default function DaysOffMaximiser() {
   const handleDecrementNbPTO = () => setNbPTO((n) => n - 1);
   const handleIncrementYear = () => setYear((y) => y + 1);
   const handleDecrementYear = () => setYear((y) => y - 1);
+
+  useEffect(() => {
+    async function fetchCountry() {
+      try {
+        const response = await fetch("https://ipwho.is/");
+        const data = await response.json();
+        if (data.country_code) {
+          setCountry(data.country_code);
+        }
+      } catch (error) {
+        console.error("Could not detect country from IP:", error);
+      }
+    }
+
+    fetchCountry();
+  }, []);
 
   return (
     <div className={styles["maximiser-container"]}>
