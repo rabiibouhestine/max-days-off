@@ -11,7 +11,7 @@ const countries = hd.getCountries("en");
 export default function DaysOffMaximiser() {
   const [country, setCountry] = useState<string>("TN");
   const [region, setRegion] = useState<string>("");
-  const [nbPTO, setNbPTO] = useState<number>(20);
+  const [nbPTO, setNbPTO] = useState<number>(24);
   const [year, setYear] = useState<number>(new Date().getFullYear());
 
   const daysInfo: DayInfo[] = generateDaysInfo(year, country, region, nbPTO);
