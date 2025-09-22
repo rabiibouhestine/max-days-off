@@ -32,6 +32,7 @@ function updateDayInfoWithHolidays(days: DayInfo[], holidays: Holiday[]): void {
 
 function assignOptimisedPTO(days: DayInfo[], nbPTO: number): DayInfo[] {
   const result = [...days];
+  const weekdays = [1, 2, 3, 4, 5]; // Monday → Friday
 
   const canAssign = (i: number): boolean =>
     result[i].type === "regular" && !isWeekend(result[i].date);
@@ -44,7 +45,7 @@ function assignOptimisedPTO(days: DayInfo[], nbPTO: number): DayInfo[] {
     nbPTO -= length;
   };
 
-  // Try smaller blocks first (1 → 4)
+  // Step 1: Fill Gaps between holidays and weekends
   for (let block = 1; block <= 4; block++) {
     for (let i = 0; i <= result.length - block; i++) {
       if (
@@ -56,6 +57,52 @@ function assignOptimisedPTO(days: DayInfo[], nbPTO: number): DayInfo[] {
         Array.from({ length: block }, (_, j) => canAssign(i + j)).every(Boolean)
       ) {
         assignBlock(i, block);
+      }
+    }
+  }
+
+  // Step 2: Distribute remaining PTO by extending vacations
+  while (nbPTO > 0) {
+    let assigned = false;
+
+    for (const dayOfWeek of weekdays) {
+      for (
+        let i = dayOfWeek === 1 ? 3 : 1;
+        i < result.length && nbPTO > 0;
+        i++
+      ) {
+        if (
+          result[i].date.getDay() === dayOfWeek &&
+          !canAssign(i - (dayOfWeek === 1 ? 3 : 1)) &&
+          canAssign(i)
+        ) {
+          result[i].type = "pto";
+          result[i].label = "Suggested PTO";
+          nbPTO--;
+          assigned = true;
+        }
+      }
+    }
+
+    if (!assigned) break; // stop if no PTO was assigned this round
+  }
+
+  // Step 3: Assign isConsecutive for calculation and styling
+  for (let i = 0; i < result.length; i++) {
+    if (result[i].type === "pto") {
+      // Mark the PTO day itself
+      result[i].isConsecutive = true;
+
+      // Extend backward
+      for (let j = i - 1; j >= 0; j--) {
+        if (result[j].type === "regular" && !isWeekend(result[j].date)) break;
+        result[j].isConsecutive = true;
+      }
+
+      // Extend forward
+      for (let j = i + 1; j < result.length; j++) {
+        if (result[j].type === "regular" && !isWeekend(result[j].date)) break;
+        result[j].isConsecutive = true;
       }
     }
   }
