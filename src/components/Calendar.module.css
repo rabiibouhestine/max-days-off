@@ -68,6 +68,48 @@
   cursor: default;
 }
 
+.day:hover {
+  transform: scale(1.1);
+  z-index: 2;
+  box-shadow: 0 2px 8px #0000001a;
+}
+
+.day:hover .tooltip {
+  opacity: 1;
+}
+
+.tooltip {
+  opacity: 0;
+  position: absolute;
+  background-color: #fff;
+  color: #333;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  white-space: nowrap;
+  z-index: 9999;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  box-shadow: 0 2px 8px #00000026;
+  border: 1px solid #ddd;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%);
+  min-width: max-content;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
+}
+
 .day-weekend {
   background-color: #f5f5f5;
   color: #666;

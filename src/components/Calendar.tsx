@@ -65,6 +65,10 @@ export default function Calendar({ daysInfo }: CalendarProps) {
               style={getDayColStart(index, firstWeekDay)}
             >
               {dayInfo.date.getDate()}
+
+              {(dayInfo.type === "holiday" || dayInfo.type === "pto") && (
+                <div className={styles["tooltip"]}>{dayInfo.label}</div>
+              )}
             </div>
           ))}
         </div>
