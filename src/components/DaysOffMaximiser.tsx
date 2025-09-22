@@ -14,7 +14,7 @@ export default function DaysOffMaximiser() {
   const [nbPTO, setNbPTO] = useState<number>(20);
   const [year, setYear] = useState<number>(new Date().getFullYear());
 
-  const daysInfo: DayInfo[] = generateDaysInfo(year, country, nbPTO);
+  const daysInfo: DayInfo[] = generateDaysInfo(year, country, region, nbPTO);
   const holidayCount = daysInfo.filter((d) => d.type === "holiday").length;
   const consecutiveCount = daysInfo.filter((d) => d.isConsecutive).length;
 
