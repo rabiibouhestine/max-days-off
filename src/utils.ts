@@ -7,6 +7,11 @@ export function getFlagEmoji(countryCode: string): string {
     .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
 }
 
+function isWeekend(date: Date): boolean {
+  const day = date.getDay(); // 0 = Sun, 6 = Sat
+  return day === 0 || day === 6;
+}
+
 function updateDayInfoWithHolidays(days: DayInfo[], holidays: Holiday[]): void {
   const holidayMap = new Map<string, Holiday>();
 
@@ -25,59 +30,33 @@ function updateDayInfoWithHolidays(days: DayInfo[], holidays: Holiday[]): void {
   }
 }
 
-function isWeekend(date: Date): boolean {
-  const day = date.getDay(); // 0 = Sun, 6 = Sat
-  return day === 0 || day === 6;
-}
-
 function assignOptimisedPTO(days: DayInfo[], nbPTO: number): DayInfo[] {
   const result = [...days];
 
-  const canAssign = (i: number): boolean => {
-    return (
-      result[i].type === "regular" && !isWeekend(result[i].date) && nbPTO > 0
-    );
+  const canAssign = (i: number): boolean =>
+    result[i].type === "regular" && !isWeekend(result[i].date);
+
+  const assignBlock = (i: number, length: number) => {
+    for (let j = 0; j < length; j++) {
+      result[i + j].type = "pto";
+      result[i + j].label = "Suggested PTO";
+    }
+    nbPTO -= length;
   };
 
-  // Step 1: Look for "bridge" PTO opportunities
-  for (let i = 1; i < result.length - 1 && nbPTO > 0; i++) {
-    if (
-      result[i - 1].type === "holiday" &&
-      result[i + 1].type === "holiday" &&
-      canAssign(i)
-    ) {
-      result[i].type = "pto";
-      result[i].label = "PTO";
-      nbPTO--;
-    }
-  }
-
-  // Step 2: Look for holiday/weekend -> PTO -> weekend patterns
-  for (let i = 0; i < result.length - 1 && nbPTO > 0; i++) {
-    if (
-      (result[i].type === "holiday" || isWeekend(result[i].date)) &&
-      canAssign(i + 1) &&
-      isWeekend(result[i + 2]?.date)
-    ) {
-      result[i + 1].type = "pto";
-      result[i + 1].label = "PTO";
-      nbPTO--;
-    }
-  }
-
-  // Step 3: Use leftover PTO to extend weekends (Fri or Mon)
-  for (let i = 0; i < result.length && nbPTO > 0; i++) {
-    const d = result[i].date.getDay();
-    if (d === 5 && canAssign(i)) {
-      // Friday
-      result[i].type = "pto";
-      result[i].label = "PTO";
-      nbPTO--;
-    } else if (d === 1 && canAssign(i)) {
-      // Monday
-      result[i].type = "pto";
-      result[i].label = "PTO";
-      nbPTO--;
+  // Try smaller blocks first (1 → 4)
+  for (let block = 1; block <= 4; block++) {
+    for (let i = 0; i <= result.length - block; i++) {
+      if (
+        nbPTO >= block && // enough PTO left
+        i > 0 &&
+        !canAssign(i - 1) && // left boundary
+        i + block < result.length &&
+        !canAssign(i + block) && // right boundary
+        Array.from({ length: block }, (_, j) => canAssign(i + j)).every(Boolean)
+      ) {
+        assignBlock(i, block);
+      }
     }
   }
 
@@ -105,7 +84,7 @@ export function generateDaysInfo(
 
   // Add holidays
   const hd = new Holidays(country, region);
-  const holidays = hd.getHolidays(year, "en");
+  const holidays = hd.getHolidays(year);
   updateDayInfoWithHolidays(days, holidays);
 
   // Distribute PTO optimally
