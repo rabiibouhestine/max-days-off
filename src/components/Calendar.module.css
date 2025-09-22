@@ -175,3 +175,8 @@
 .holiday-name span:first-child {
   font-weight: 600;
 }
+
+.holiday-name span:last-child {
+  margin-left: auto;
+  text-align: right;
+}
