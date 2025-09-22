@@ -17,11 +17,13 @@ export default function DaysOffMaximiser() {
   const daysInfo: DayInfo[] = generateDaysInfo(year, country, region, nbPTO);
   const holidayCount = daysInfo.filter((d) => d.type === "holiday").length;
   const consecutiveCount = daysInfo.filter((d) => d.isConsecutive).length;
+  const currentYear = new Date().getFullYear();
 
-  const handleIncrementNbPTO = () => setNbPTO((n) => n + 1);
-  const handleDecrementNbPTO = () => setNbPTO((n) => n - 1);
+  const handleIncrementNbPTO = () => setNbPTO((n) => Math.min(n + 1, 99));
+  const handleDecrementNbPTO = () => setNbPTO((n) => Math.max(n - 1, 0));
   const handleIncrementYear = () => setYear((y) => y + 1);
-  const handleDecrementYear = () => setYear((y) => y - 1);
+  const handleDecrementYear = () =>
+    setYear((y) => Math.max(y - 1, currentYear));
 
   useEffect(() => {
     async function fetchCountry() {

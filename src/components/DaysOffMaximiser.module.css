@@ -11,6 +11,10 @@
   margin-block: 32px;
 }
 
+.maximiser-container p {
+  font-size: 1.2em;
+}
+
 .inputs-container {
   display: flex;
   align-items: center;
@@ -19,6 +23,7 @@
   flex-wrap: wrap;
   margin-top: 40px;
   margin-bottom: 32px;
+  font-size: 1.2em;
 }
 
 .inputs-container button {
