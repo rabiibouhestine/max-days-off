@@ -74,11 +74,24 @@ export default function Calendar({ daysInfo }: CalendarProps) {
         </div>
       </div>
 
-      <div className={styles["consecutive-days-off"]}>
-        <div className={styles["days-off-period"]}>
-          <span>Apr 4 - Apr 6:</span>
-          <span>3 days off</span>
-        </div>
+      <div className={styles["holidays-names"]}>
+        {daysInfo
+          .filter((d) => d.type === "holiday")
+          .map((holiday) => {
+            const formattedDate = holiday.date.toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+            });
+            return (
+              <div
+                key={holiday.date.toISOString()}
+                className={styles["holiday-name"]}
+              >
+                <span>{formattedDate}:</span>
+                <span>{holiday.label}</span>
+              </div>
+            );
+          })}
       </div>
     </div>
   );

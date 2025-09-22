@@ -155,16 +155,24 @@
   border: 2px solid #299669;
 }
 
-.consecutive-days-off {
-  padding: 8px;
-  background-color: #f8f9fa;
-  border-radius: 6px;
-  font-size: 0.85em;
+.holidays-names {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.days-off-period {
+.holiday-name {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px;
+  flex-wrap: wrap;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 0.85em;
+}
+
+.holiday-name span:first-child {
+  color: #e57373;
+  font-weight: 700;
 }

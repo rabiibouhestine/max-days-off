@@ -193,7 +193,7 @@ export function generateDaysInfo(
   // Step 2: Add holidays to the days
   // -----------------------------
   const hd = new Holidays(country, region); // initialize holiday library
-  const holidays = hd.getHolidays(year); // get holidays for the year
+  const holidays = hd.getHolidays(year, "en"); // get holidays for the year
   updateDayInfoWithHolidays(days, holidays); // mark holidays in the days array
 
   // -----------------------------
