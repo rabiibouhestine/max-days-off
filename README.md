@@ -49,6 +49,13 @@ Open http://localhost:5173 to view it in your browser.
 - Vite for fast development and HMR.
 - ESLint for code quality.
 
+## Roadmap
+
+- [ ] Improve Styling
+- [ ] Save inputs in local storage
+- [ ] Allow user to edit/add holidays
+- [ ] Change year input with start/end date inputs
+
 ## Contributing
 
 Feel free to open issues or submit pull requests. Suggestions for additional features or improvements are welcome!
