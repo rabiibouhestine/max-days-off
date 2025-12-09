@@ -9,7 +9,7 @@ function App() {
       <DaysOffMaximiser />
       <p>
         Made with ❤️ by{" "}
-        <a href="https://rabiibouhestine.com/" target="_blank">
+        <a href="https://rabii.dev/" target="_blank">
           Rabii Bouhestine
         </a>
       </p>
